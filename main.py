@@ -51,7 +51,7 @@ except:
     msg = '\n- 慎防強烈搖晃，就近避難「趴下、掩護、穩住」'
 
 header = {
-    'authorization': 'NDEzMjcxOTc1Nzc1OTYxMDk5.GAAQry.HLyUzpgVG9XBvzJoSau2NiWxn_CNfZb-mk5O_4'
+    'authorization': ''
 }
 
 end_time = time.time()
