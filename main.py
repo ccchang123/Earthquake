@@ -29,6 +29,15 @@ for i in list:
         index = list.index(i)
         break
 location = str(geolocation.reverse(f'{list[index]},{list[index + 1]}')).split(', ')
+location = ''.join(location[::-1][2:])
+location = location if location else '外海'
+
+try:
+    scale = int(list[index + 3])
+    if scale > 10:
+        scale = f'{str(scale)[0]}.{str(scale)[1]}'
+except:
+    scale = list[index + 3]
 
 # channel = [997371332796895312]
 channel = [997371332796895312, 944193820503994408, 1031438474651381791]
@@ -42,20 +51,20 @@ except:
     msg = '\n- 慎防強烈搖晃，就近避難「趴下、掩護、穩住」'
 
 header = {
-    'authorization': ''
+    'authorization': 'NDEzMjcxOTc1Nzc1OTYxMDk5.GAAQry.HLyUzpgVG9XBvzJoSau2NiWxn_CNfZb-mk5O_4'
 }
 
 end_time = time.time()
 
 data = {
     'content': f"""```diff
-- {list[index - 5]}/{list[index - 4]} {list[index - 3]}:{list[index - 2]}:{list[index - 1]} 左右發生顯著有感地震{msg}
+- 【地震速報】{list[index - 5]}/{list[index - 4]} {list[index - 3]}:{list[index - 2]}:{list[index - 1]} 左右發生顯著有感地震{msg}
 
 新北市預估震度: {level} 級
-預估抵達時間: {int(list[index + 6]) - int(end_time - start_time)} 秒
-預估震央: 北緯 {list[index]} 度, 東經 {list[index + 1]} 度 ({''.join(location[::-1][2:])})
+預估抵達時間: {sec - int(end_time - start_time)} 秒
+預估震央: 北緯 {list[index]} 度, 東經 {list[index + 1]} 度 ({location})
 預估深度: {list[index + 2]} 公里
-預估規模: {list[index + 3]}
+預估規模: {scale}
 預估最大震度: {list[index + 4]} 級
 
 + 資料來源: 地牛 Wake Up!
@@ -71,4 +80,3 @@ for i in channel:
     try:
         res = requests.post(f'https://discord.com/api/v9/channels/{i}/messages', headers=header, data=data)
     except: ...
-# input()
